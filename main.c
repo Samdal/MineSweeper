@@ -23,6 +23,7 @@ static void NewGame(void);
 static void UpdateDrawFrame(void);
 static void UpdateGame(void);
 static void DrawGame(void);
+static void DrawTile(int x, int y);
 
 int main(int argc, char *argv[]) {
   // Set game area and bomb amount with command line args
@@ -117,4 +118,11 @@ void DrawGame(void) {
     return;
   }
   EndDrawing();
+}
+
+void DrawTile(int x, int y) {
+  // find naboring bombs
+  int nearby = 0;
+  for (int i = 0; i < TotalBombs; i++) {
+  }
 }
