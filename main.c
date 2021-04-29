@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 // Global variables
-static bool shouldRedraw = false;
+static bool shouldRedraw = true;
 static int screenWidth = 800;
 static int screenHeight = 800;
 static Vector2 squareSize;
@@ -48,6 +48,9 @@ int main(int argc, char *argv[]) {
   while (!WindowShouldClose())
     UpdateDrawFrame();
 
+  // close down and free memory
+  free(bombPos);
+  free(shown);
   CloseWindow();
   return 0;
 }
@@ -58,17 +61,19 @@ void InitGame(void) {
     TilesX = 20;
   if (TilesY <= 0)
     TilesY = 20;
-  if (TotalBombs <= 0 || TotalBombs >= TilesX * TilesY)
+
+  int TileArea = TilesX * TilesY;
+  if (TotalBombs <= 0 || TotalBombs >= TileArea)
     TotalBombs = 20;
+
   bombPos = malloc(20 * sizeof(Bomb));
-  shown = calloc(TilesX * TilesY, sizeof(bool));
+  bool(*shown)[TilesX] = calloc(TileArea, sizeof(bool));
 
   // square size
   squareSize.x = (float)screenWidth / (float)TilesX;
   squareSize.y = (float)screenHeight / (float)TilesY;
 
   NewGame();
-  shouldRedraw = true;
 }
 
 void NewGame(void) {
