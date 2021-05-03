@@ -179,9 +179,9 @@ void DrawGame(void) {
                  squareSize.y * 0.6f, GREEN);
 
   if (gameOver) {
-    float xsize = TilesX * 0.2f * squareSize.x;
-    float ysize = TilesY * 0.2f * squareSize.y;
-    float fsize = TilesX * 0.1f * squareSize.x;
+    const float xsize = TilesX * 0.2f * squareSize.x;
+    const float ysize = TilesY * 0.2f * squareSize.y;
+    const float fsize = TilesX * 0.1f * squareSize.x;
     DrawText("GAME OVER!", xsize, ysize, fsize, GOLD);
     DrawText("(press SPACE to replay)", xsize, (TilesY * 0.5f) * squareSize.y,
              fsize * 0.5f, GOLD);
@@ -190,6 +190,9 @@ void DrawGame(void) {
 }
 
 void DrawTile(const int *x, const int *y) {
+  const float xsize = (*x + 0.35f) * squareSize.x;
+  const float ysize = (*y + 0.2f) * squareSize.y;
+  const float fsize = 0.55f * squareSize.y;
   // find naboring bombs
   int nearby = 0;
   for (int i = 0; i < TotalBombs; i++) {
@@ -200,8 +203,7 @@ void DrawTile(const int *x, const int *y) {
       nearby++;
 
     if (bombPos[i].x == *x && bombPos[i].y == *y) {
-      DrawText("x", (*x + 0.35f) * squareSize.x, (*y + 0.2f) * squareSize.y,
-               squareSize.y * 0.6f, RED);
+      DrawText("x", xsize, ysize, fsize, RED);
       return;
     }
   }
@@ -211,6 +213,5 @@ void DrawTile(const int *x, const int *y) {
   if (nearby == 0)
     return;
   const char c[] = {nearby + '0', '\0'};
-  DrawText(c, (*x + 0.35f) * squareSize.x, (*y + 0.2f) * squareSize.y,
-           squareSize.y * 0.6f, BLACK);
+  DrawText(c, xsize, ysize, fsize, BLACK);
 }
